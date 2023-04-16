@@ -3,14 +3,21 @@ const router = express.Router();
 const {
     getCategories,
     createCategory,
+    deleteCategories,
+    getCategory,
     putCategory,
-    deleteCategories
+    deleteCategory
 } = require('../controllers/categoryController')
+const protectedRoute = require('../middlewares/auth')
 
 router.route('/')
     .get(getCategories)
-    .post(createCategory)
+    .post(protectedRoute, createCategory)
+    .delete(protectedRoute, deleteCategories)
+
+router.route('/:categoryId')
+    .get(getCategory)
     .put(putCategory)
-    .delete(deleteCategories)
+    .delete(deleteCategory)
 
 module.exports = router;
